@@ -1,0 +1,96 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(CargoKarCustomerApp());
+}
+
+class CargoKarCustomerApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'CargoKar Customer',
+      theme: ThemeData(primarySwatch: Colors.indigo),
+      home: SplashScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => LoginScreen()),
+      );
+    });
+
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'CargoKar',
+          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}
+
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final phoneController = TextEditingController();
+
+  void sendOtp() {
+    final phone = phoneController.text.trim();
+    if (phone.length == 10) {
+      // TODO: Firebase OTP Integration
+      Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Login')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(labelText: 'Enter your mobile number'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: sendOtp,
+              child: Text('Send OTP'),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Book a Ride')),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Navigate to Booking Screen
+          },
+          child: Text('Book Now'),
+        ),
+      ),
+    );
+  }
+}
